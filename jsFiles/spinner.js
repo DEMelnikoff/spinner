@@ -94,10 +94,8 @@ var spinnerTask = (function() {
             {sectors: [ {color:"#0026ff", label:"11"}, {color:"#0026ff", label:"11"}, {color:"#0026ff", label:"11"}, {color:"#0026ff", label:"11"}, {color:"#fe0000", label:"1"} ], ev: 9, var: 20, arrangement: 41},
 
         /*  5
-            4 4 4 4 9   ev = 5; v = 5
-            8 8 8 8 13  ev = 9; v = 5
-            3 3 3 3 13  ev = 5; v = 20
-            11 11 11 11 1 ev = 9; v = 20
+            5 5 5 5 5   ev = 5; v = 0
+            9 9 9 9 9   ev = 9; v = 0
         */
             {sectors: [ {color:"#ffd800", label:"5"}, {color:"#ffd800", label:"5"}, {color:"#ffd800", label:"5"}, {color:"#ffd800", label:"5"}, {color:"#ffd800", label:"5"} ], ev: 5, var: 0, arrangement: 5},
             {sectors: [ {color:"#0094fe", label:"9"}, {color:"#0094fe", label:"9"}, {color:"#0094fe", label:"9"}, {color:"#0094fe", label:"9"}, {color:"#0094fe", label:"9"} ], ev: 9, var: 0, arrangement: 5},
@@ -110,7 +108,7 @@ var spinnerTask = (function() {
             createSpinner(c, spinnerData, jsPsych.timelineVariable('sectors'));
         },
         canvas_size: [500, 500],
-        data: {color: 'blue', radius: 100}
+        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
     };
 
     const feedback = {
