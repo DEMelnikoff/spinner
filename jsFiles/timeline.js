@@ -1,6 +1,9 @@
 const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
+jsPsych.data.addPrperties({
+    subject: subject_id
+})
 
 const save_data = {
     type: jsPsychPipe,
