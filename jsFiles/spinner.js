@@ -145,8 +145,8 @@ var spinnerTask = (function() {
         scale_width: 500,
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
-            let scoreArray = jsPsych.data.get().select('score');
-            let outcomesArray = jsPsych.data.get().select('outcomes');
+            let scoreArray = jsPsych.data.get().select('score').values;
+            let outcomesArray = jsPsych.data.get().select('outcomes').values;
             data.score = scoreArray[scoreArray.length - 2];
             data.outcomes = outcomesArray[outcomesArray.length - 2];
             data.question_type = Object.keys(data.response)[0];
