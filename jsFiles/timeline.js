@@ -2,7 +2,7 @@ const subject_id = jsPsych.randomization.randomID(10);
 const filename = `${subject_id}.csv`;
 
 jsPsych.data.addProperties({
-    subject: subject_id
+    subject: subject_id,
 })
 
 const save_data = {
