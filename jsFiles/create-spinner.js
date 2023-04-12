@@ -12,10 +12,10 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
   const scoreMsg = document.getElementById("score");
 
   /* get wheel properties */
-  const wheelWidth = canvas.getBoundingClientRect()['width'];
-  const wheelHeight = canvas.getBoundingClientRect()['height'];
-  const wheelX = canvas.getBoundingClientRect()['x'] + wheelWidth / 2;
-  const wheelY = canvas.getBoundingClientRect()['y'] + wheelHeight / 2;
+  let wheelWidth = canvas.getBoundingClientRect()['width'];
+  let wheelHeight = canvas.getBoundingClientRect()['height'];
+  let wheelX = canvas.getBoundingClientRect()['x'] + wheelWidth / 2;
+  let wheelY = canvas.getBoundingClientRect()['y'] + wheelHeight / 2;
   const tot = sectors.length; // total number of sectors
   const rad = wheelWidth / 2; // radius of wheel
   const PI = Math.PI;
@@ -187,6 +187,14 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
   });
 
   window.addEventListener('mouseup', onRelease);
+
+  window.addEventListener('resize', function(event) {
+    wheelWidth = canvas.getBoundingClientRect()['width'];
+    wheelHeight = canvas.getBoundingClientRect()['height'];
+    wheelX = canvas.getBoundingClientRect()['x'] + wheelWidth / 2;
+    wheelY = canvas.getBoundingClientRect()['y'] + wheelHeight / 2;
+    console.log("resize")
+  }, true);
 
 }
 
