@@ -102,6 +102,7 @@ var jsPsychCanvasButtonResponse = (function (jspsych) {
           let spinnerData = {
             outcomes: [],
             score: 0,
+            rt: null,
           };
           trial.stimulus(c, spinnerData);
 
@@ -116,6 +117,7 @@ var jsPsychCanvasButtonResponse = (function (jspsych) {
               var trial_data = {
                   outcomes: spinnerData.outcomes,
                   score: spinnerData.score,
+                  rt: spinnerData.rt,
               };
               // clear the display
               display_element.innerHTML = "";
@@ -125,6 +127,9 @@ var jsPsychCanvasButtonResponse = (function (jspsych) {
           // function to handle responses by the subject
           function after_response(choice) {
               // measure rt
+              var end_time = performance.now();
+              var rt = Math.round(end_time - start_time);
+              spinnerData.rt = rt;
               // after a valid response, the stimulus will have the CSS class 'responded'
               // which can be used to provide visual feedback that a response was recorded
               display_element.querySelector("#jspsych-canvas-button-response-stimulus").className +=
