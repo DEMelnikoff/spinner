@@ -53,6 +53,12 @@ var jsPsychCanvasButtonResponse = (function (jspsych) {
               pretty_name: "Canvas size",
               default: [500, 500],
           },
+          /** Player's total score. */
+          score: {
+              type: jspsych.ParameterType.INT,
+              pretty_name: "Score",
+              default: 0,
+          },
       },
   };
   /**
@@ -69,13 +75,18 @@ var jsPsychCanvasButtonResponse = (function (jspsych) {
       }
       trial(display_element, trial) {
           // create canvas
-          var html = '<div id="jspsych-canvas-button-response-stimulus">' +
-              '<canvas id="jspsych-canvas-stimulus" height="' +
-              trial.canvas_size[0] +
-              '" width="' +
-              trial.canvas_size[1] +
-              '"></canvas>' +
-              '<div id="spin">SPIN asd asd asd as dasd as dasd asd asd as d</div>' +
+          var html = 
+              '<div class="score-board">' +
+                '<div class="score-board-title">Total Score</div>' +
+                '<div class="score-board-score" id="score" >' + trial.score + '</div>' +
+              '</div>' +
+              '<div id="jspsych-canvas-button-response-stimulus">' +
+                '<canvas id="jspsych-canvas-stimulus" height="' +
+                trial.canvas_size[0] +
+                '" width="' +
+                trial.canvas_size[1] +
+                '"></canvas>' +
+                '<div id="spin">Spin!</div>' +
               "</div>";
 
           //show prompt if there is one
@@ -89,8 +100,8 @@ var jsPsychCanvasButtonResponse = (function (jspsych) {
 
           // store data
           let spinnerData = {
-            outcome: null,
-            rt: null,
+            outcomes: [],
+            score: 0,
           };
           trial.stimulus(c, spinnerData);
 
@@ -103,21 +114,17 @@ var jsPsychCanvasButtonResponse = (function (jspsych) {
               this.jsPsych.pluginAPI.clearAllTimeouts();
               // gather the data to store for the trial
               var trial_data = {
-                  rt: spinnerData.rt,
-                  outcome: spinnerData.outcome,
+                  outcomes: spinnerData.outcomes,
+                  score: spinnerData.score,
               };
               // clear the display
               display_element.innerHTML = "";
               // move on to the next trial
               this.jsPsych.finishTrial(trial_data);
-              console.log(trial_data.outcome, trial_data.rt);
           };
           // function to handle responses by the subject
           function after_response(choice) {
               // measure rt
-              var end_time = performance.now();
-              var rt = Math.round(end_time - start_time);
-              spinnerData.rt = rt;
               // after a valid response, the stimulus will have the CSS class 'responded'
               // which can be used to provide visual feedback that a response was recorded
               display_element.querySelector("#jspsych-canvas-button-response-stimulus").className +=
@@ -134,7 +141,7 @@ var jsPsychCanvasButtonResponse = (function (jspsych) {
           }
           // end trial
           const waitForEnd = setInterval(function() {
-            if(spinnerData.outcome) {
+            if(spinnerData.outcomes.length >= 5) {
               clearInterval(waitForEnd);
               setTimeout(after_response, 1000);
             }

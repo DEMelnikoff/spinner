@@ -517,7 +517,7 @@
 
 /* spinner styling */
 #spin {
-  font: 1.5rem/0 sans-serif;
+  font: 3rem/0 sans-serif;
   user-select: none;
   cursor: pointer;
   display: flex;
@@ -529,7 +529,7 @@
   width: 30%;
   height: 30%;
   margin: -15%;
-  background: #fff;
+  background: grey;
   color: #fff;
   box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
   border-radius: 50%;
@@ -557,3 +557,25 @@
 #jspsych-canvas-stimulus {
   display: block;
 }
+
+
+.score-board {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  height:150px; width:400px; 
+  margin: auto
+}
+
+.score-board-title {
+  position: absolute;
+  top: 0px;
+  font-size:25px;
+}
+
+.score-board-score {
+  position: absolute;
+  top: 60px;
+  font-size:40px;
+}
+

@@ -1,12 +1,19 @@
+const subject_id = jsPsych.randomization.randomID(10);
+const filename = `${subject_id}.csv`;
 
-function MakeTimeline(game) {
-    this.timeline = [
-        game.task.block,
-    ]
+
+const save_data = {
+    type: jsPsychPipe,
+    action: "save",
+    experiment_id: "WL2m4UnXKCIJ",
+    filename: filename,
+    data_string: ()=>jsPsych.data.get().csv()
 };
 
-var exp = new MakeTimeline(spinnerTask);
-
+const exp = [
+        spinnerTask.task.block,
+        save_data,
+    ];
 
 // initiate timeline
-jsPsych.run(exp.timeline);
+jsPsych.run(exp);
