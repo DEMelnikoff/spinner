@@ -379,19 +379,59 @@
   border-color: #ccc;
 }
 
+
+/* David's custom styling of btn elements */
+.david-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  height: 50px;
+  margin: 0px;
+  font-size: 14px;
+  font-weight: 400;
+  font-family: "Open Sans", "Arial", sans-serif;
+  cursor: pointer;
+  line-height: 1.4;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  background-image: none;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+}
+
 /* only apply the hover style on devices with a mouse/pointer that can hover - issue #977 */
 @media (hover: hover) {
   .jspsych-btn:hover {
     background-color: #ddd;
     border-color: #aaa;
   }
+  .david-btn:hover {
+    background-color: #ddd;
+    border-color: #aaa;
+  }
 }
+
 .jspsych-btn:active {
   background-color: #ddd;
   border-color: #000000;
 }
 
+.david-btn:active {
+  background-color: #ddd;
+  border-color: #000000;
+}
+
 .jspsych-btn:disabled {
+  background-color: #eee;
+  color: #aaa;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.david-btn:disabled {
   background-color: #eee;
   color: #aaa;
   border-color: #ccc;
