@@ -120,14 +120,15 @@ var spinnerTask = (function() {
         questions: [
             {prompt: `During the last round of Spin the Wheel,<br>to what extent did you feel immersed and engaged in what you were doing?`,
             name: `flow`,
-            labels: ['0<br><br>A little', '1', '2', '3', '4', '5', '6', '7', '8<br><br>Extremely']},
+            labels: ['0<br>A little', '1', '2', '3', '4', '5', '6', '7', '8<br>Extremely']},
         ],
         randomize_question_order: false,
         scale_width: 500,
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
+            data.question_type = Object.keys(data.response)[0];
             data.response = Object.values(data.response)[0];
-            data.questionType = Object.keys(data.response)[0]
+            console.log(typeof data.question_type, data.question_type)
         }
     };
 
@@ -136,24 +137,17 @@ var spinnerTask = (function() {
         questions: [
             {prompt: `How happy are you right now?`,
             name: `happiness`,
-            labels: ['0<br><br>Very unhappy', '1', '2', '3', '4', '5', '6', '7', '8<br><br>Very happy']},
+            labels: ['0<br>Very unhappy', '1', '2', '3', '4', '5', '6', '7', '8<br>Very happy']},
         ],
         randomize_question_order: false,
         scale_width: 500,
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
+            data.question_type = Object.keys(data.response)[0];
             data.response = Object.values(data.response)[0];
-            data.questionType = Object.keys(data.response)[0]
+            console.log(typeof data.question_type, data.question_type)
         }
     };
-
-    const feedback = {
-        type: jsPsychHtmlKeyboardResponse,
-        stimulus: `<div style="font-size:60px">Get ready for the next round!</div>`,
-        choices: "NO_KEYS",
-        trial_duration: 2000,
-    };     
-
 
     p.task.block = {
         timeline: [spin, flowMeasure, happinessMeasure],
