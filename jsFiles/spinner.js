@@ -111,7 +111,6 @@ var spinnerTask = (function() {
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
             scoreTracker = data.score
-            console.log(jsPsych.data.get().csv())
         }
     };
 
@@ -126,9 +125,12 @@ var spinnerTask = (function() {
         scale_width: 500,
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
+            let scoreArray = jsPsych.data.get().select('score').values;
+            let outcomesArray = jsPsych.data.get().select('outcomes').values;
+            data.score = scoreArray[scoreArray.length - 1];
+            data.outcomes = outcomesArray[outcomesArray.length - 1];
             data.question_type = Object.keys(data.response)[0];
             data.response = Object.values(data.response)[0];
-            console.log(typeof data.question_type, data.question_type)
         }
     };
 
@@ -143,9 +145,12 @@ var spinnerTask = (function() {
         scale_width: 500,
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
+            let scoreArray = jsPsych.data.get().select('score');
+            let outcomesArray = jsPsych.data.get().select('outcomes');
+            data.score = scoreArray[scoreArray.length - 2];
+            data.outcomes = outcomesArray[outcomesArray.length - 2];
             data.question_type = Object.keys(data.response)[0];
             data.response = Object.values(data.response)[0];
-            console.log(typeof data.question_type, data.question_type)
         }
     };
 
