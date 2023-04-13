@@ -97,6 +97,7 @@ var spinnerTask = (function() {
     console.log(stim[0])
 
     let scoreTracker = 0;
+    let round = 1;
 
 
     const spin = {
@@ -159,6 +160,10 @@ var spinnerTask = (function() {
         repetitions: 1,
         timeline_variables: [0,1].map(x => stim[x]),
         randomize_order: true,
+        on_finish: function(data) {
+            data.round = round;
+            round++
+        }
     };
 
    /*
