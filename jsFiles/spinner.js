@@ -152,6 +152,7 @@ var spinnerTask = (function() {
             data.outcomes = outcomesArray[outcomesArray.length - 2];
             data.question_type = Object.keys(data.response)[0];
             data.response = Object.values(data.response)[0];
+            round++;
         }
     };
 
@@ -160,9 +161,6 @@ var spinnerTask = (function() {
         repetitions: 1,
         timeline_variables: [0,1].map(x => stim[x]),
         randomize_order: true,
-        on_timeline_finish: function() {
-            round++;
-        }
     };
 
    /*
