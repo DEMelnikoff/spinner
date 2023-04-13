@@ -94,8 +94,6 @@ var spinnerTask = (function() {
             {sectors: [ wedges.nine, wedges.nine, wedges.nine, wedges.nine ], ev: 9, var: 0, arrangement: 4},
         ];
 
-    console.log(stim[0])
-
     let scoreTracker = 0;
     let round = 1;
 
@@ -156,7 +154,6 @@ var spinnerTask = (function() {
             data.question_type = Object.keys(data.response)[0];
             data.response = Object.values(data.response)[0];
             round++;
-            console.log(jsPsych.data.get().select('round'));
         }
     };
 

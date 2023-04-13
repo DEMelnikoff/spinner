@@ -245,7 +245,6 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
     wheelHeight = canvas.getBoundingClientRect()['height'];
     wheelX = canvas.getBoundingClientRect()['x'] + wheelWidth / 2;
     wheelY = canvas.getBoundingClientRect()['y'] + wheelHeight / 2;
-    console.log("resize")
   }, true);
 
 }
