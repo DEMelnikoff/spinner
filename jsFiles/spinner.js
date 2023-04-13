@@ -109,7 +109,7 @@ var spinnerTask = (function() {
         score: function() {
             return scoreTracker
         },
-        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
+        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement'), round: round},
         on_finish: function(data) {
             scoreTracker = data.score
         }
@@ -124,7 +124,7 @@ var spinnerTask = (function() {
         ],
         randomize_question_order: false,
         scale_width: 500,
-        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
+        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement'), round: round},
         on_finish: function(data) {
             let scoreArray = jsPsych.data.get().select('score').values;
             let outcomesArray = jsPsych.data.get().select('outcomes').values;
@@ -144,7 +144,7 @@ var spinnerTask = (function() {
         ],
         randomize_question_order: false,
         scale_width: 500,
-        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
+        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement'), round: round},
         on_finish: function(data) {
             let scoreArray = jsPsych.data.get().select('score').values;
             let outcomesArray = jsPsych.data.get().select('outcomes').values;
@@ -160,9 +160,8 @@ var spinnerTask = (function() {
         repetitions: 1,
         timeline_variables: [0,1].map(x => stim[x]),
         randomize_order: true,
-        on_finish: function(data) {
-            data.round = round;
-            round++
+        on_timeline_finish: function() {
+            round++;
         }
     };
 
