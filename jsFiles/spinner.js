@@ -109,8 +109,9 @@ var spinnerTask = (function() {
         score: function() {
             return scoreTracker
         },
-        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement'), round: round},
+        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
+            data.round = round;
             scoreTracker = data.score
         }
     };
@@ -124,8 +125,9 @@ var spinnerTask = (function() {
         ],
         randomize_question_order: false,
         scale_width: 500,
-        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement'), round: round},
+        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
+            data.round = round;
             let scoreArray = jsPsych.data.get().select('score').values;
             let outcomesArray = jsPsych.data.get().select('outcomes').values;
             data.score = scoreArray[scoreArray.length - 1];
@@ -144,8 +146,9 @@ var spinnerTask = (function() {
         ],
         randomize_question_order: false,
         scale_width: 500,
-        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement'), round: round},
+        data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
+            data.round = round;
             let scoreArray = jsPsych.data.get().select('score').values;
             let outcomesArray = jsPsych.data.get().select('outcomes').values;
             data.score = scoreArray[scoreArray.length - 2];
@@ -153,6 +156,7 @@ var spinnerTask = (function() {
             data.question_type = Object.keys(data.response)[0];
             data.response = Object.values(data.response)[0];
             round++;
+            console.log(jsPsych.data.get().select('round'));
         }
     };
 
