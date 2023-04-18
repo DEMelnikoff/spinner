@@ -33,15 +33,18 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
   let isSpinning = false;      // true when wheel is spinning, false otherwise
   let isAccelerating = false;  // true when wheel is accelerating, false otherwise
   let lastAngles = [0,0,0];    // store the last three angles
+  let correctSpeed = [0]       // speed corrected for 360-degree limit
   let startAngle = null;       // angle of grab
   let oldAngle = 0;            // wheel angle prior to last perturbation
   let currentAngle = null;     // wheel angle after last perturbation
+  let onWheel = false;         // true when cursor is on wheel, false otherwise
 
 
   /* define spinning functions */
 
   const onGrab = (x, y) => {
     if (!isSpinning) {
+      canvas.style.cursor = "grabbing";
       isGrabbed = true;
       startAngle = calculateAngle(x, y);
     };
@@ -55,13 +58,22 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
   };
 
   const onMove = (x, y) => {
-    if(isGrabbed) { isDragging = true };
+    if(isGrabbed) {
+      canvas.style.cursor = "grabbing";
+      isDragging = true;
+    };
     if(!isDragging)
       return
     lastAngles.shift();
     let deltaAngle = calculateAngle(x, y) - startAngle;
     currentAngle = deltaAngle + oldAngle;
     lastAngles.push(currentAngle);
+    let speed = lastAngles[2] - lastAngles[0];
+    if (Math.abs(speed) < 200) {
+      correctSpeed.shift();
+      correctSpeed.push(speed);
+    };
+    console.log(correctSpeed);
     render(currentAngle);
   };
 
@@ -74,7 +86,7 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
     if(isDragging){
       isDragging = false;
       oldAngle = currentAngle;
-      let speed = lastAngles[2] - lastAngles[0];
+      let speed = correctSpeed[0];
       if (Math.abs(speed) > angVelMin) {
         isAccelerating = true;
         isSpinning = true;
@@ -116,8 +128,7 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
         currentAngle = oldAngle;
         let sector = sectors[getIndex()];
         spinnerData.outcomes.push(parseFloat(sector.label));
-        pointer.textContent = sector.label;
-        pointer.style.background = sector.color;
+        drawSector(sectors, getIndex());
         updateScore(parseFloat(sector.label), sector.color);
         window.cancelAnimationFrame(req);
       };
@@ -130,12 +141,12 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
   const updateScore = (points, color) => {
     score += points;
     spinnerData.score = score;
-    scoreMsg.innerHTML = `<span style="color:${color}; font-size:70px; font-weight: bold">${score}</span>`;
+    scoreMsg.innerHTML = `<span style="color:${color}; font-weight: bolder">${score}</span>`;
     setTimeout(() => {
       scoreMsg.innerHTML = `${score}`
-      pointer.textContent = "Spin!";
-      pointer.style.background = "grey";
       isSpinning = false;
+      drawSector(sectors, null);
+      onWheel ? canvas.style.cursor = "grab" : canvas.style.cursor = "";
     }, 1000);
   };
 
@@ -204,38 +215,52 @@ const createSpinner = function(canvas, spinnerData, score, sectors) {
   }
 
   //* Draw sectors and prizes texts to canvas */
-  const drawSector = (sector, i) => {
-    const ang = arc * i;
-    ctx.save();
-    // COLOR
-    ctx.beginPath();
-    ctx.fillStyle = sector.color;
-    ctx.moveTo(rad, rad);
-    ctx.arc(rad, rad, rad, ang, ang + arc);
-    ctx.lineTo(rad, rad);
-    ctx.fill();
-    // TEXT
-    ctx.translate(rad, rad);
-    ctx.rotate(ang + arc / 2);
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#fff";
-    ctx.font = "bold 50px sans-serif";
-    ctx.fillText(sector.label, rad - 80, 10);
-    textUnderline(ctx,sector.label, rad - 80, 10, "#fff", "50px", "center");
-
-    // RESTORE
-    ctx.restore();
+  const drawSector = (sectors, sector) => {
+    for (let i = 0; i < sectors.length; i++) {
+      const ang = arc * i;
+      ctx.save();
+      // COLOR
+      ctx.beginPath();
+      ctx.fillStyle = sectors[i].color;
+      ctx.moveTo(rad, rad);
+      ctx.arc(rad, rad, rad, ang, ang + arc);
+      ctx.lineTo(rad, rad);
+      ctx.fill();
+      // TEXT
+      ctx.translate(rad, rad);
+      ctx.rotate( (ang + arc / 2) + arc );
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#fff";
+      if (isSpinning && i == sector) {
+        ctx.font = "bolder 50px sans-serif"
+        ctx.strokeStyle = 'black';
+        ctx.lineWidth = 8;
+        ctx.strokeText(sectors[i].label, 0, -140);
+        ctx.fillText(sectors[i].label, 0, -140);
+      } else {
+        ctx.font = "bold 50px sans-serif"
+        ctx.fillText(sectors[i].label, 0, -140);
+      }
+     // ctx.fillText(sector.label, rad - 80, 10);
+     // textUnderline(ctx,sectors[i].label, 0, -135, "#fff", "50px", "center");
+      // RESTORE
+      ctx.restore();
+    }
   };
 
-  sectors.forEach(drawSector);
+  drawSector(sectors, null);
 
   /* add event listners */
   canvas.addEventListener('mousedown', function(e) {
-      onGrab(e.clientX, e.clientY);
+      if (onWheel) { onGrab(e.clientX, e.clientY) };
+      console.log(e.clientX, e.clientY)
   });
 
   canvas.addEventListener('mousemove', function(e) {
-      if(isGrabbed) { onMove(e.clientX, e.clientY) };
+      let dist = Math.sqrt( (wheelX - e.clientX)**2 + (wheelY - e.clientY)**2 );
+      dist < rad ? onWheel = true : onWheel = false;
+      onWheel && !isGrabbed && !isSpinning ? canvas.style.cursor = "grab" : canvas.style.cursor = "";
+      if(isGrabbed && onWheel) { onMove(e.clientX, e.clientY) };
   });
 
   window.addEventListener('mouseup', onRelease);

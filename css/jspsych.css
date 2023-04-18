@@ -557,30 +557,30 @@
 
 /* spinner styling */
 #spin {
-  font: 3rem/0 sans-serif;
+  font: 1rem/0 sans-serif;
   user-select: none;
-  cursor: pointer;
+ /* cursor: pointer; */
   display: flex;
   justify-content: center;
   align-items: center;
   position: absolute;
-  top: 50%;
+  top: 58%;
   left: 50%;
-  width: 30%;
-  height: 30%;
-  margin: -15%;
-  background: grey;
-  color: #fff;
+  width: 16%;
+  height: 8%;
+  margin: -8%;
+  color: white;
+  background: white;
   box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
-  border-radius: 50%;
+  border-radius: 10%;
   transition: 0.8s;
 }
 
 #spin::after {
   content: '';
   position: absolute;
-  top: -17px;
-  border: 10px solid transparent;
+  top: -48px;
+  border: 48px solid transparent;
   border-bottom-color: currentColor;
   border-top: none;
 }
@@ -589,8 +589,6 @@
 #jspsych-canvas-button-response-stimulus {
   display: inline-flex;
   position: relative;
-  /* height: 720px;
-  width: 720px; */
   overflow: hidden;
 }
 
@@ -603,19 +601,24 @@
   position: relative;
   display: flex;
   justify-content: center;
-  height:150px; width:400px; 
-  margin: auto
+  height:120px; width:300px; 
+  margin: auto;
+  border: 3px solid;
+  border-color: grey;
+  background: #ededed;
+  margin-bottom: 48px;
+
 }
 
 .score-board-title {
   position: absolute;
-  top: 0px;
+  top: 20px;
   font-size:25px;
 }
 
 .score-board-score {
   position: absolute;
-  top: 60px;
+  top: 70px;
   font-size:40px;
 }
 

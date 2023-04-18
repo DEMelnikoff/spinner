@@ -107,6 +107,7 @@ var spinnerTask = (function() {
         score: function() {
             return scoreTracker
         },
+        post_trial_gap: 750,
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
             data.round = round;
@@ -119,10 +120,10 @@ var spinnerTask = (function() {
         questions: [
             {prompt: `During the last round of Spin the Wheel,<br>to what extent did you feel immersed and engaged in what you were doing?`,
             name: `flow`,
-            labels: ['0<br>A little', '1', '2', '3', '4', '5', '6', '7', '8<br>Extremely']},
+            labels: ['0<br>A little', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10<br>Extremely']},
         ],
         randomize_question_order: false,
-        scale_width: 500,
+        scale_width: 600,
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
             data.round = round;
@@ -140,10 +141,10 @@ var spinnerTask = (function() {
         questions: [
             {prompt: `How happy are you right now?`,
             name: `happiness`,
-            labels: ['0<br>Very unhappy', '1', '2', '3', '4', '5', '6', '7', '8<br>Very happy']},
+            labels: ['0<br>Very unhappy', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10<br>Very happy']},
         ],
         randomize_question_order: false,
-        scale_width: 500,
+        scale_width: 600,
         data: {ev: jsPsych.timelineVariable('ev'), var: jsPsych.timelineVariable('var'), arrangement: jsPsych.timelineVariable('arrangement')},
         on_finish: function(data) {
             data.round = round;
