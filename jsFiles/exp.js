@@ -30,7 +30,7 @@ const exp = (function() {
 
             `<div class='parent'>
                 <p>Throughout Spin the Wheel, you'll answer questions about your feelings.</p>
-                <p>Specifially, you'll report how <strong>immersed and engaged</strong> you feel while spinning each wheel,<br>
+                <p>Specifically, you'll report how <strong>immersed and engaged</strong> you feel while spinning each wheel,<br>
                 as well as how <strong>happy</strong> you currently feel.</p>
             </div>`,      
 
