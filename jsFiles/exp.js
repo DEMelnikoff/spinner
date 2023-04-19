@@ -48,6 +48,12 @@ const exp = (function() {
         ],
     };
 
+    p.consent = {
+        type: jsPsychExternalHtml,
+        url: "./html/consent.html",
+        cont_btn: "advance",
+    };
+
     p.intro = {
         type: jsPsychInstructions,
         pages: html.intro,
@@ -295,6 +301,6 @@ const exp = (function() {
 
 }());
 
-const timeline = [exp.intro, exp.task, exp.demographics, exp.save_data];
+const timeline = [exp.consent, exp.intro, exp.task, exp.demographics, exp.save_data];
 
 jsPsych.run(timeline);
